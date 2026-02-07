@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DHAAR — Brand Identity System | AyuVinc</title>
+  <meta name="description" content="Brand identity system for DHAAR by AyuVinc - Healthcare Infrastructure for India" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='44' y='14' width='12' height='72' rx='3' fill='%2317b890'/%3E%3Cpath d='M44,32 C44,32 14,34 14,54 C14,74 44,76 44,76 L44,66 C44,66 26,64 26,54 C26,44 44,42 44,42 Z' fill='%2317b890'/%3E%3Cpath d='M56,32 C56,32 86,34 86,54 L86,86 L74,86 L74,54 C74,44 56,42 56,42 Z' fill='%2317b890'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+      background: #ffffff;
+      color: #1a1f36;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    #root { min-height: 100vh; }
+    ::selection { background: rgba(23, 184, 144, 0.15); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    /* ═══════════════════════════════════════════════════
+       BRAND CONTENT — DHAAR × AyuVinc
+       ═══════════════════════════════════════════════════ */
+
+    const BRAND_STORY = {
+      dhaar: {
+        title: "DHAAR",
+        subtitle: "The Platform",
+        meaning: "धार (Dhaar) means \"flow\" or \"stream\" in Hindi — a continuous, purposeful current. In the context of healthcare, it represents the uninterrupted flow of clinical intelligence, patient data, and care connectivity across India's fragmented healthcare landscape.",
+        what: "DHAAR is India's healthcare operating system for independent clinicians. It is the infrastructure layer — not software, not a marketplace — that standardizes clinical workflows, decision-making, and connectivity across fragmented care systems in Tier 2-3 cities.",
+        vision: "To be the nervous system connecting 1M+ independent doctors, diagnostics, and pharmacies with outcome-aligned intelligence. DHAAR doesn't replace what clinicians do — it amplifies how they do it.",
+        positioning: [
+          "Infrastructure, not software — we're the rails, not the train",
+          "Clinical intelligence, not digitization — we don't just move paper to screens",
+          "Network effects over SaaS metrics — every clinic connected makes every other clinic stronger",
+          "Patient data sovereignty — patients own their data, clinicians are stewards",
+        ],
+      },
+      ayuvinc: {
+        title: "AyuVinc",
+        subtitle: "The Company",
+        what: "AyuVinc is the corporate entity behind DHAAR. It is the holding company that builds, operates, and scales healthcare infrastructure products for the Indian market.",
+        relationship: "Think of it as: Google (company) → Android (platform). AyuVinc (company) → DHAAR (platform). The public-facing brand for clinicians and patients is DHAAR. AyuVinc appears in corporate, investor, and legal contexts.",
+        note: "The name AyuVinc draws from 'Ayu' (life/vitality in Sanskrit) and 'Vinc' (to conquer/overcome in Latin) — signifying the mission to overcome healthcare fragmentation and restore vitality to India's primary care system.",
+      },
+      logo: {
+        devanagari: {
+          title: "धार — The Primary Mark",
+          rationale: "Leading with Devanagari is a deliberate choice. DHAAR's primary users are Tier 2-3 allopathic doctors across India — professionals who think, practice, and communicate in Hindi and regional languages. The Devanagari mark signals: this platform is built for you, not adapted from somewhere else.",
+          symbolism: [
+            "The शिरोरेखा (shirorekha / headline bar) that connects all Devanagari characters is the visual metaphor for infrastructure — a single unified line connecting independent elements into a cohesive system",
+            "The word धार itself means flow/stream — the continuous movement of clinical data, decisions, and care across a connected network",
+            "The geometric, modern treatment signals: this is technology, not tradition. Modern healthcare infrastructure, not alternative medicine",
+          ],
+        },
+        dh: {
+          title: '"dh" — The Secondary Mark',
+          rationale: "The 'dh' monogram serves English-language, international, and compact digital contexts where Devanagari isn't practical (favicons, app icons, investor decks).",
+          symbolism: [
+            "The shared vertical stem between 'd' and 'h' represents unified infrastructure — two distinct elements (doctor + healthcare system) connected through a single backbone",
+            "The left bowl (from 'd') and right shoulder (from 'h') mirror each other, suggesting bidirectional data flow — information flowing from clinician to system and back",
+            "Three diminishing dots trailing from the mark represent network propagation — data and intelligence rippling outward from each connected node",
+            "The top accent bar echoes the Devanagari shirorekha, creating visual DNA that connects both marks",
+          ],
+        },
+        icon: {
+          title: "Icon Mark — The Compact Symbol",
+          rationale: "At 32px, you can't read 'dh' or 'धार'. The icon mark distills the brand to its essence: a central backbone with two connected elements — the minimum viable symbol for 'unified healthcare infrastructure'.",
+        },
+        colors: {
+          teal: "Teal (#17b890) is the primary color — it sits at the intersection of healthcare (clinical, calm, trustworthy) and technology (modern, digital, forward). It avoids the sterile blue of hospital brands and the clichéd green of pharma.",
+          orange: "Orange (#ff6b35) is the accent — it brings warmth, energy, and accessibility. In a category dominated by cold blues and greens, orange says: healthcare infrastructure can be human, approachable, and alive.",
+          dark: "Dark Navy (#1a1f36) provides gravitas — it's the formal anchor for print, documents, and professional contexts. Deeper than pure black, it carries sophistication without heaviness.",
+        },
+      },
+    };
+
+    /* ═══════════════════════════════════════════════════
+       COLORS
+       ═══════════════════════════════════════════════════ */
+
+    const COLORS = {
+      teal: { hex: "#17b890", name: "Teal", label: "Primary" },
+      orange: { hex: "#ff6b35", name: "Orange", label: "Secondary" },
+      dark: { hex: "#1a1f36", name: "Dark", label: "Formal" },
+      white: { hex: "#ffffff", name: "White", label: "Reversed" },
+    };
+
+    /* ═══════════════════════════════════════════════════
+       SVG LOGO COMPONENTS
+       ═══════════════════════════════════════════════════ */
+
+    function DevanagariLogo({ color = "#17b890", size = 120 }) {
+      return (
+        <svg viewBox="0 0 280 120" width={size * 2.33} height={size} style={{ display: "block" }}>
+          <text x="140" y="95" textAnchor="middle" fontFamily="'Noto Sans Devanagari', sans-serif" fontWeight="700" fontSize="110" fill={color} letterSpacing="-2">धार</text>
+        </svg>
+      );
+    }
+
+    function DhMonogram({ color = "#17b890", size = 120 }) {
+      return (
+        <svg viewBox="0 0 200 200" width={size} height={size}>
+          <path d="M94,60 C94,60 42,62 42,100 C42,138 94,140 94,140 L94,128 C94,128 56,126 56,100 C56,74 94,72 94,72 Z" fill={color} />
+          <rect x="90" y="32" width="16" height="112" rx="3" fill={color} />
+          <path d="M106,60 C106,60 158,62 158,100 L158,144 L144,144 L144,100 C144,74 106,72 106,72 Z" fill={color} />
+          <rect x="82" y="30" width="32" height="5" rx="2" fill={color} />
+          <circle cx="158" cy="154" r="4" fill={color} />
+          <circle cx="170" cy="154" r="3" fill={color} />
+          <circle cx="180" cy="154" r="2" fill={color} />
+        </svg>
+      );
+    }
+
+    function IconMark({ color = "#17b890", size = 64 }) {
+      return (
+        <svg viewBox="0 0 100 100" width={size} height={size}>
+          <rect x="44" y="14" width="12" height="72" rx="3" fill={color} />
+          <path d="M44,32 C44,32 14,34 14,54 C14,74 44,76 44,76 L44,66 C44,66 26,64 26,54 C26,44 44,42 44,42 Z" fill={color} />
+          <path d="M56,32 C56,32 86,34 86,54 L86,86 L74,86 L74,54 C74,44 56,42 56,42 Z" fill={color} />
+        </svg>
+      );
+    }
+
+    function Wordmark({ color = "#17b890", size = 60 }) {
+      return (
+        <svg viewBox="0 0 440 80" width={size * 5.5} height={size}>
+          <g transform="translate(4, 4) scale(0.72)">
+            <rect x="44" y="14" width="12" height="72" rx="3" fill={color} />
+            <path d="M44,32 C44,32 14,34 14,54 C14,74 44,76 44,76 L44,66 C44,66 26,64 26,54 C26,44 44,42 44,42 Z" fill={color} />
+            <path d="M56,32 C56,32 86,34 86,54 L86,86 L74,86 L74,54 C74,44 56,42 56,42 Z" fill={color} />
+          </g>
+          <rect x="84" y="12" width="1.5" height="56" rx="0.75" fill={color} opacity="0.25" />
+          <text x="100" y="54" fontFamily="'DM Sans', sans-serif" fontWeight="700" fontSize="46" letterSpacing="6" fill={color}>DHAAR</text>
+        </svg>
+      );
+    }
+
+    function StackedLogo({ color = "#17b890", size = 160 }) {
+      return (
+        <svg viewBox="0 0 200 220" width={size * 0.91} height={size}>
+          <g transform="translate(50, 10) scale(1)">
+            <rect x="44" y="14" width="12" height="72" rx="3" fill={color} />
+            <path d="M44,32 C44,32 14,34 14,54 C14,74 44,76 44,76 L44,66 C44,66 26,64 26,54 C26,44 44,42 44,42 Z" fill={color} />
+            <path d="M56,32 C56,32 86,34 86,54 L86,86 L74,86 L74,54 C74,44 56,42 56,42 Z" fill={color} />
+          </g>
+          <text x="100" y="135" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontWeight="700" fontSize="36" letterSpacing="5" fill={color}>DHAAR</text>
+          <text x="100" y="158" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontWeight="400" fontSize="8.5" letterSpacing="4" fill={color} opacity="0.55">HEALTHCARE INFRASTRUCTURE</text>
+        </svg>
+      );
+    }
+
+    /* ═══════════════════════════════════════════════════
+       UI COMPONENTS
+       ═══════════════════════════════════════════════════ */
+
+    function LogoCard({ children, title, bg = "#fff", border = "#e8ebef", compact = false }) {
+      return (
+        <div style={{ background: bg, border: `1px solid ${border}`, borderRadius: 12, padding: compact ? "16px 20px" : "32px 28px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12, minHeight: compact ? 80 : 140 }}>
+          {children}
+          {title && <span style={{ fontSize: 11, fontWeight: 500, color: bg === "#1a1f36" ? "#8892a4" : "#7a8494", letterSpacing: "0.05em", textTransform: "uppercase" }}>{title}</span>}
+        </div>
+      );
+    }
+
+    function SectionTitle({ number, title, id }) {
+      return (
+        <div id={id} style={{ marginBottom: 20, marginTop: 56, scrollMarginTop: 80 }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
+            <span style={{ fontSize: 13, fontWeight: 700, color: "#17b890", fontFamily: "'JetBrains Mono', monospace" }}>{number}</span>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: "#1a1f36", margin: 0, letterSpacing: "-0.01em" }}>{title}</h2>
+          </div>
+          <div style={{ height: 1, background: "linear-gradient(to right, #17b890, transparent)", marginTop: 10, opacity: 0.3 }} />
+        </div>
+      );
+    }
+
+    function ColorSwatch({ hex, name, label, usage, rationale }) {
+      const [copied, setCopied] = useState(false);
+      return (
+        <div style={{ display: "flex", alignItems: "flex-start", gap: 16, padding: "18px 20px", background: "#f7f9fb", borderRadius: 12, cursor: "pointer", border: "1px solid #eaeef3", transition: "all 0.15s" }}
+          onClick={() => { navigator.clipboard?.writeText(hex); setCopied(true); setTimeout(() => setCopied(false), 1500); }}>
+          <div style={{ width: 52, height: 52, borderRadius: 12, background: hex, flexShrink: 0 }} />
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: 700, fontSize: 15, color: "#1a1f36" }}>{name} <span style={{ fontWeight: 400, color: "#8892a4", fontSize: 12 }}>— {label}</span></div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: "#5a6577", marginTop: 3 }}>{hex}</div>
+            <div style={{ fontSize: 13, color: "#5a6577", marginTop: 6, lineHeight: 1.55 }}>{rationale}</div>
+          </div>
+          <span style={{ fontSize: 11, color: "#17b890", fontWeight: 600, opacity: copied ? 1 : 0, transition: "opacity 0.15s", whiteSpace: "nowrap" }}>Copied!</span>
+        </div>
+      );
+    }
+
+    function Callout({ icon, title, children, bg = "#f0faf6", border = "#d4efe6", accent = "#17b890" }) {
+      return (
+        <div style={{ background: bg, border: `1px solid ${border}`, borderRadius: 12, padding: "20px 24px", marginBottom: 16 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+            <span style={{ fontSize: 16 }}>{icon}</span>
+            <span style={{ fontSize: 14, fontWeight: 700, color: accent, letterSpacing: "0.02em" }}>{title}</span>
+          </div>
+          <div style={{ fontSize: 14, color: "#3a4a5c", lineHeight: 1.65 }}>{children}</div>
+        </div>
+      );
+    }
+
+    function NavDot({ label, target, active }) {
+      return (
+        <a href={`#${target}`} style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", padding: "4px 0", opacity: active ? 1 : 0.5, transition: "opacity 0.2s" }}>
+          <div style={{ width: 6, height: 6, borderRadius: "50%", background: active ? "#17b890" : "#b0b8c8" }} />
+          <span style={{ fontSize: 11, color: active ? "#17b890" : "#8892a4", fontWeight: 500, letterSpacing: "0.04em" }}>{label}</span>
+        </a>
+      );
+    }
+
+    /* ═══════════════════════════════════════════════════
+       MAIN APP
+       ═══════════════════════════════════════════════════ */
+
+    function App() {
+      const [activeColor, setActiveColor] = useState("teal");
+      const currentColor = COLORS[activeColor].hex;
+
+      return (
+        <div style={{ maxWidth: 960, margin: "0 auto", padding: "0 24px 100px", lineHeight: 1.6 }}>
+
+          {/* ════════════════════════════════════════════
+              HERO HEADER
+              ════════════════════════════════════════════ */}
+          <div style={{ background: "#1a1f36", margin: "0 -24px", padding: "56px 44px 48px", position: "relative", overflow: "hidden" }}>
+            {/* Grid pattern */}
+            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(23,184,144,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(23,184,144,0.04) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+            {/* Accent glow */}
+            <div style={{ position: "absolute", top: -100, right: -100, width: 400, height: 400, background: "radial-gradient(circle, rgba(23,184,144,0.08) 0%, transparent 70%)", borderRadius: "50%" }} />
+            
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 6 }}>
+                <IconMark color="#17b890" size={38} />
+                <span style={{ fontSize: 13, fontWeight: 700, color: "#17b890", letterSpacing: "0.25em", textTransform: "uppercase" }}>DHAAR</span>
+                <span style={{ fontSize: 11, color: "#4a5568", fontWeight: 500 }}>by AyuVinc</span>
+              </div>
+              <h1 style={{ fontSize: 36, fontWeight: 700, color: "#ffffff", margin: "20px 0 10px", letterSpacing: "-0.025em", lineHeight: 1.2 }}>Brand Identity System</h1>
+              <p style={{ color: "#8892a4", fontSize: 16, margin: 0, maxWidth: 560, lineHeight: 1.6 }}>
+                Logo suite, brand narrative, color palette, and usage guidelines.<br />
+                <span style={{ color: "#5a6577" }}>For co-founders, team, and design partners.</span>
+              </p>
+
+              {/* Quick nav */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 16px", marginTop: 28 }}>
+                {[
+                  ["Brand Story", "brand-story"],
+                  ["Logos", "primary-logo"],
+                  ["Logo Rationale", "logo-rationale"],
+                  ["Colors", "colors"],
+                  ["Guidelines", "guidelines"],
+                  ["Typography", "typography"],
+                  ["Mockups", "mockups"],
+                ].map(([label, target]) => (
+                  <a key={target} href={`#${target}`} style={{ fontSize: 12, color: "#17b890", textDecoration: "none", padding: "5px 12px", border: "1px solid rgba(23,184,144,0.2)", borderRadius: 6, transition: "all 0.15s" }}
+                    onMouseOver={e => { e.target.style.background = "rgba(23,184,144,0.1)"; }}
+                    onMouseOut={e => { e.target.style.background = "transparent"; }}>
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* ════════════════════════════════════════════
+              01: BRAND STORY — DHAAR × AyuVinc
+              ════════════════════════════════════════════ */}
+          <SectionTitle number="01" title="Brand Story — DHAAR × AyuVinc" id="brand-story" />
+
+          {/* DHAAR as platform */}
+          <div style={{ background: "linear-gradient(135deg, #f0faf6 0%, #f7fbf9 100%)", border: "1px solid #d4efe6", borderRadius: 16, padding: "32px 36px", marginBottom: 20 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+              <StackedLogo color="#17b890" size={70} />
+              <div>
+                <div style={{ fontSize: 22, fontWeight: 700, color: "#1a1f36" }}>{BRAND_STORY.dhaar.title}</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: "#17b890", letterSpacing: "0.1em", textTransform: "uppercase" }}>{BRAND_STORY.dhaar.subtitle}</div>
+              </div>
+            </div>
+
+            <div style={{ fontSize: 15, color: "#2a5c4e", lineHeight: 1.7, marginBottom: 16, fontStyle: "italic", borderLeft: "3px solid #17b890", paddingLeft: 16 }}>
+              {BRAND_STORY.dhaar.meaning}
+            </div>
+
+            <p style={{ fontSize: 14, color: "#3a4a5c", lineHeight: 1.7, marginBottom: 14 }}>
+              {BRAND_STORY.dhaar.what}
+            </p>
+
+            <p style={{ fontSize: 14, color: "#3a4a5c", lineHeight: 1.7, marginBottom: 18 }}>
+              <strong style={{ color: "#1a1f36" }}>Vision:</strong> {BRAND_STORY.dhaar.vision}
+            </p>
+
+            <div style={{ fontSize: 12, fontWeight: 700, color: "#17b890", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>Positioning Pillars</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+              {BRAND_STORY.dhaar.positioning.map((item, i) => (
+                <div key={i} style={{ fontSize: 13, color: "#3a4a5c", lineHeight: 1.55, padding: "10px 14px", background: "rgba(255,255,255,0.7)", borderRadius: 8, border: "1px solid #e0f0ea" }}>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* AyuVinc as company */}
+          <div style={{ background: "#f7f8fb", border: "1px solid #e4e7ee", borderRadius: 16, padding: "28px 36px", marginBottom: 20 }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 14 }}>
+              <span style={{ fontSize: 20, fontWeight: 700, color: "#1a1f36" }}>{BRAND_STORY.ayuvinc.title}</span>
+              <span style={{ fontSize: 13, fontWeight: 600, color: "#8892a4", letterSpacing: "0.1em", textTransform: "uppercase" }}>{BRAND_STORY.ayuvinc.subtitle}</span>
+            </div>
+
+            <p style={{ fontSize: 14, color: "#3a4a5c", lineHeight: 1.7, marginBottom: 12 }}>
+              {BRAND_STORY.ayuvinc.what}
+            </p>
+
+            <div style={{ fontSize: 14, color: "#1a1f36", lineHeight: 1.7, padding: "14px 18px", background: "#eef0f5", borderRadius: 10, marginBottom: 12, fontWeight: 500 }}>
+              {BRAND_STORY.ayuvinc.relationship}
+            </div>
+
+            <p style={{ fontSize: 13, color: "#5a6577", lineHeight: 1.6, fontStyle: "italic" }}>
+              {BRAND_STORY.ayuvinc.note}
+            </p>
+          </div>
+
+          {/* Color Selector */}
+          <div style={{ display: "flex", gap: 8, marginTop: 16, padding: "8px 10px", background: "#f4f6f9", borderRadius: 10, width: "fit-content" }}>
+            {Object.entries(COLORS).filter(([k]) => k !== "white").map(([key, val]) => (
+              <button key={key} onClick={() => setActiveColor(key)}
+                style={{ padding: "7px 16px", borderRadius: 7, border: "none", cursor: "pointer", fontSize: 13, fontWeight: activeColor === key ? 700 : 500, background: activeColor === key ? "#fff" : "transparent", color: activeColor === key ? val.hex : "#7a8494", boxShadow: activeColor === key ? "0 1px 4px rgba(0,0,0,0.08)" : "none", transition: "all 0.15s", display: "flex", alignItems: "center", gap: 6, fontFamily: "'DM Sans', sans-serif" }}>
+                <div style={{ width: 10, height: 10, borderRadius: "50%", background: val.hex }} />
+                {val.name}
+              </button>
+            ))}
+          </div>
+
+          {/* ════════════════════════════════════════════
+              02: PRIMARY LOGO
+              ════════════════════════════════════════════ */}
+          <SectionTitle number="02" title="Primary Logo — Devanagari धार" id="primary-logo" />
+          <p style={{ fontSize: 14, color: "#5a6577", marginTop: -8, marginBottom: 20, lineHeight: 1.65 }}>
+            The Devanagari wordmark is the primary brand mark. Used in all India-facing contexts — the app, clinic materials, patient touchpoints, and marketing.
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            <LogoCard title="Light background" bg="#ffffff"><DevanagariLogo color={currentColor} size={90} /></LogoCard>
+            <LogoCard title="Dark background" bg="#1a1f36" border="#2a3048"><DevanagariLogo color={activeColor === "dark" ? "#ffffff" : currentColor} size={90} /></LogoCard>
+          </div>
+
+          {/* ════════════════════════════════════════════
+              03: SECONDARY MARK
+              ════════════════════════════════════════════ */}
+          <SectionTitle number="03" title='Secondary Mark — "dh" Monogram' id="dh-monogram" />
+          <p style={{ fontSize: 14, color: "#5a6577", marginTop: -8, marginBottom: 20, lineHeight: 1.65 }}>
+            The "dh" monogram for English-language, international, and compact digital contexts.
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+            <LogoCard title="Monogram" bg="#ffffff"><DhMonogram color={currentColor} size={120} /></LogoCard>
+            <LogoCard title="Dark variant" bg="#1a1f36" border="#2a3048"><DhMonogram color={activeColor === "dark" ? "#ffffff" : currentColor} size={120} /></LogoCard>
+            <LogoCard title="Icon sizes" bg="#ffffff">
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                <IconMark color={currentColor} size={64} />
+                <IconMark color={currentColor} size={48} />
+                <IconMark color={currentColor} size={32} />
+              </div>
+            </LogoCard>
+          </div>
+
+          {/* ════════════════════════════════════════════
+              04: WORDMARK & STACKED
+              ════════════════════════════════════════════ */}
+          <SectionTitle number="04" title="Wordmark & Stacked Versions" id="wordmark" />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 16 }}>
+            <LogoCard title="Horizontal wordmark" bg="#ffffff"><Wordmark color={currentColor} size={50} /></LogoCard>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 16 }}>
+            <LogoCard title="Stacked — light" bg="#ffffff"><StackedLogo color={currentColor} size={160} /></LogoCard>
+            <LogoCard title="Stacked — dark" bg="#1a1f36" border="#2a3048"><StackedLogo color={activeColor === "dark" ? "#ffffff" : currentColor} size={160} /></LogoCard>
+          </div>
+
+          {/* ════════════════════════════════════════════
+              05: LOGO RATIONALE — What the logo tells us
+              ════════════════════════════════════════════ */}
+          <SectionTitle number="05" title="Logo Rationale — What It Tells Us About DHAAR" id="logo-rationale" />
+
+          {/* Devanagari rationale */}
+          <div style={{ background: "#f7f9fb", border: "1px solid #e8ecf1", borderRadius: 14, padding: "28px 32px", marginBottom: 16 }}>
+            <h3 style={{ fontSize: 17, fontWeight: 700, color: "#1a1f36", margin: "0 0 8px" }}>{BRAND_STORY.logo.devanagari.title}</h3>
+            <p style={{ fontSize: 14, color: "#3a4a5c", lineHeight: 1.65, marginBottom: 16 }}>{BRAND_STORY.logo.devanagari.rationale}</p>
+            <div style={{ fontSize: 12, fontWeight: 700, color: "#17b890", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>Visual Symbolism</div>
+            {BRAND_STORY.logo.devanagari.symbolism.map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 10, marginBottom: 10, fontSize: 13, color: "#3a4a5c", lineHeight: 1.6 }}>
+                <span style={{ color: "#17b890", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>→</span>
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* dh rationale */}
+          <div style={{ background: "#f7f9fb", border: "1px solid #e8ecf1", borderRadius: 14, padding: "28px 32px", marginBottom: 16 }}>
+            <h3 style={{ fontSize: 17, fontWeight: 700, color: "#1a1f36", margin: "0 0 8px" }}>{BRAND_STORY.logo.dh.title}</h3>
+            <p style={{ fontSize: 14, color: "#3a4a5c", lineHeight: 1.65, marginBottom: 16 }}>{BRAND_STORY.logo.dh.rationale}</p>
+            <div style={{ fontSize: 12, fontWeight: 700, color: "#17b890", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>Design Anatomy</div>
+
+            {/* Visual annotation */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 40, padding: "24px 0 20px", marginBottom: 16 }}>
+              <DhMonogram color="#17b890" size={160} />
+              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                {BRAND_STORY.logo.dh.symbolism.map((item, i) => (
+                  <div key={i} style={{ display: "flex", gap: 8, fontSize: 12, color: "#3a4a5c", lineHeight: 1.55, maxWidth: 340 }}>
+                    <span style={{ color: "#17b890", fontWeight: 700, flexShrink: 0 }}>→</span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Icon rationale */}
+          <div style={{ background: "#f7f9fb", border: "1px solid #e8ecf1", borderRadius: 14, padding: "24px 32px", marginBottom: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+              <IconMark color="#17b890" size={56} />
+              <div>
+                <h3 style={{ fontSize: 16, fontWeight: 700, color: "#1a1f36", margin: "0 0 4px" }}>{BRAND_STORY.logo.icon.title}</h3>
+                <p style={{ fontSize: 13, color: "#3a4a5c", lineHeight: 1.6, margin: 0 }}>{BRAND_STORY.logo.icon.rationale}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* ════════════════════════════════════════════
+              06: COLOR PALETTE
+              ════════════════════════════════════════════ */}
+          <SectionTitle number="06" title="Color Palette" id="colors" />
+          <p style={{ fontSize: 14, color: "#5a6577", marginTop: -8, marginBottom: 20, lineHeight: 1.65 }}>
+            Each color was chosen with intent. Click any swatch to copy the hex code.
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <ColorSwatch hex="#17b890" name="Teal" label="Primary" rationale={BRAND_STORY.logo.colors.teal} />
+            <ColorSwatch hex="#ff6b35" name="Orange" label="Secondary" rationale={BRAND_STORY.logo.colors.orange} />
+            <ColorSwatch hex="#1a1f36" name="Dark Navy" label="Formal" rationale={BRAND_STORY.logo.colors.dark} />
+          </div>
+
+          {/* All variations grid */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginTop: 20 }}>
+            <LogoCard title="Teal" bg="#fff" compact><IconMark color="#17b890" size={48} /></LogoCard>
+            <LogoCard title="Orange" bg="#fff" compact><IconMark color="#ff6b35" size={48} /></LogoCard>
+            <LogoCard title="Dark" bg="#fff" compact><IconMark color="#1a1f36" size={48} /></LogoCard>
+            <LogoCard title="White" bg="#1a1f36" border="#2a3048" compact><IconMark color="#ffffff" size={48} /></LogoCard>
+          </div>
+
+          {/* ════════════════════════════════════════════
+              07: USAGE GUIDELINES
+              ════════════════════════════════════════════ */}
+          <SectionTitle number="07" title="Usage Guidelines" id="guidelines" />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+            <div style={{ background: "#f0faf6", padding: 24, borderRadius: 12, border: "1px solid #d4efe6" }}>
+              <h3 style={{ fontSize: 14, fontWeight: 700, color: "#17b890", margin: "0 0 14px", letterSpacing: "0.05em" }}>✓ DO</h3>
+              {[
+                "Use धार (Devanagari) as the primary mark in India",
+                '"dh" monogram for English, international, digital compact',
+                "Maintain clear space ≥ 1× character height around logo",
+                "Single-color versions only — no gradients, no effects",
+                "Icon mark for app icons, favicons, avatars (32px+)",
+                "Pair with DM Sans for English, Noto Sans Devanagari for Hindi",
+                "Use DHAAR for the platform, AyuVinc for corporate/legal",
+              ].map((item, i) => (
+                <div key={i} style={{ fontSize: 13, color: "#2a5c4e", padding: "5px 0", lineHeight: 1.55 }}>{item}</div>
+              ))}
+            </div>
+            <div style={{ background: "#fef5f2", padding: 24, borderRadius: 12, border: "1px solid #f5ddd5" }}>
+              <h3 style={{ fontSize: 14, fontWeight: 700, color: "#d44420", margin: "0 0 14px", letterSpacing: "0.05em" }}>✗ DON'T</h3>
+              {[
+                "Rotate, stretch, skew, or distort the logo",
+                "Add drop shadows, gradients, or glow effects",
+                "Use colors outside the defined palette",
+                "Place on busy, patterned, or low-contrast backgrounds",
+                "Use ornate or classical Devanagari styling",
+                "Pair with healthcare clichés (hearts, crosses, caduceus)",
+                "Use AyuVinc in patient-facing or clinician-facing materials",
+              ].map((item, i) => (
+                <div key={i} style={{ fontSize: 13, color: "#7a3d30", padding: "5px 0", lineHeight: 1.55 }}>{item}</div>
+              ))}
+            </div>
+          </div>
+
+          {/* When to use which */}
+          <div style={{ marginTop: 20, background: "#f7f9fb", border: "1px solid #e8ecf1", borderRadius: 14, padding: "24px 28px" }}>
+            <h3 style={{ fontSize: 15, fontWeight: 700, color: "#1a1f36", margin: "0 0 14px" }}>When to Use Which Logo</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+              {[
+                { mark: "धार (Devanagari)", contexts: "App UI, clinic materials, patient-facing, marketing in India, prescription headers" },
+                { mark: '"dh" Monogram', contexts: "Investor decks, international contexts, email signatures, social media profile images" },
+                { mark: "Icon Mark", contexts: "App icon, favicon, 32px avatars, loading screens, watermarks" },
+                { mark: "Horizontal Wordmark", contexts: "Website header, email header, partnership materials, letterhead" },
+                { mark: "Stacked Logo", contexts: "App splash screen, signage, presentation title slides, merchandise" },
+                { mark: "DHAAR + AyuVinc", contexts: "Legal documents, investor agreements, corporate filings, press releases" },
+              ].map((item, i) => (
+                <div key={i} style={{ padding: "12px 14px", background: "#fff", borderRadius: 8, border: "1px solid #eaeef3" }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "#17b890", marginBottom: 4 }}>{item.mark}</div>
+                  <div style={{ fontSize: 12, color: "#5a6577", lineHeight: 1.5 }}>{item.contexts}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ════════════════════════════════════════════
+              08: TYPOGRAPHY
+              ════════════════════════════════════════════ */}
+          <SectionTitle number="08" title="Typography" id="typography" />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
+            <div style={{ padding: 22, background: "#f7f9fb", borderRadius: 12, border: "1px solid #eaeef3" }}>
+              <div style={{ fontSize: 11, color: "#8892a4", fontWeight: 600, letterSpacing: "0.1em", marginBottom: 8, textTransform: "uppercase" }}>Primary English</div>
+              <div style={{ fontSize: 30, fontWeight: 700, color: "#1a1f36", fontFamily: "'DM Sans', sans-serif" }}>DM Sans</div>
+              <div style={{ fontSize: 12, color: "#5a6577", marginTop: 6 }}>Bold 700 for headings<br />Medium 500 for body<br />Regular 400 for captions</div>
+            </div>
+            <div style={{ padding: 22, background: "#f7f9fb", borderRadius: 12, border: "1px solid #eaeef3" }}>
+              <div style={{ fontSize: 11, color: "#8892a4", fontWeight: 600, letterSpacing: "0.1em", marginBottom: 8, textTransform: "uppercase" }}>Monospace</div>
+              <div style={{ fontSize: 26, fontWeight: 500, color: "#1a1f36", fontFamily: "'JetBrains Mono', monospace" }}>JetBrains Mono</div>
+              <div style={{ fontSize: 12, color: "#5a6577", marginTop: 6 }}>Technical UI, data displays,<br />code references, hex values</div>
+            </div>
+            <div style={{ padding: 22, background: "#f7f9fb", borderRadius: 12, border: "1px solid #eaeef3" }}>
+              <div style={{ fontSize: 11, color: "#8892a4", fontWeight: 600, letterSpacing: "0.1em", marginBottom: 8, textTransform: "uppercase" }}>Hindi / Devanagari</div>
+              <div style={{ fontSize: 30, fontWeight: 700, color: "#1a1f36", fontFamily: "'Noto Sans Devanagari', sans-serif" }}>नोटो सैन्स</div>
+              <div style={{ fontSize: 12, color: "#5a6577", marginTop: 6 }}>Hindi body text, UI labels,<br />patient-facing materials</div>
+            </div>
+          </div>
+
+          {/* ════════════════════════════════════════════
+              09: APPLICATION MOCKUPS
+              ════════════════════════════════════════════ */}
+          <SectionTitle number="09" title="Application Mockups" id="mockups" />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            {/* App splash */}
+            <div style={{ background: "#1a1f36", borderRadius: 16, padding: "48px 32px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16 }}>
+              <StackedLogo color="#17b890" size={140} />
+              <div style={{ fontSize: 10, color: "#4a5568", letterSpacing: "0.2em", textTransform: "uppercase", marginTop: 12 }}>App Splash Screen</div>
+            </div>
+
+            {/* Clinic card */}
+            <div style={{ background: "#fff", borderRadius: 16, padding: 32, border: "1px solid #e8ebef", display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: 220 }}>
+              <Wordmark color="#1a1f36" size={32} />
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1f36" }}>Dr. Sharma</div>
+                <div style={{ fontSize: 12, color: "#8892a4", marginTop: 2 }}>General Physician • Jaipur</div>
+                <div style={{ fontSize: 11, color: "#17b890", marginTop: 8, fontWeight: 500 }}>Powered by DHAAR Healthcare Infrastructure</div>
+              </div>
+              <div style={{ fontSize: 10, color: "#c0c8d4", letterSpacing: "0.2em", textTransform: "uppercase", marginTop: 8 }}>Clinic Card</div>
+            </div>
+
+            {/* Prescription header */}
+            <div style={{ background: "#fff", borderRadius: 16, padding: "24px 32px", border: "1px solid #e8ebef", gridColumn: "1 / -1" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "2px solid #17b890", paddingBottom: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <IconMark color="#17b890" size={28} />
+                  <div>
+                    <div style={{ fontSize: 16, fontWeight: 700, color: "#1a1f36" }}>Dr. Priya Mehta, MBBS, MD</div>
+                    <div style={{ fontSize: 12, color: "#8892a4" }}>Reg. No. 12345 • General Medicine • Lucknow, UP</div>
+                  </div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#17b890", letterSpacing: "0.1em" }}>DHAAR</div>
+                  <div style={{ fontSize: 10, color: "#b0b8c8" }}>Healthcare Infrastructure</div>
+                </div>
+              </div>
+              <div style={{ fontSize: 10, color: "#c0c8d4", letterSpacing: "0.2em", textTransform: "uppercase", marginTop: 12 }}>Prescription Header</div>
+            </div>
+
+            {/* Investor deck title */}
+            <div style={{ background: "linear-gradient(135deg, #1a1f36 0%, #242a45 100%)", borderRadius: 16, padding: "40px 36px", gridColumn: "1 / -1", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+                  <IconMark color="#17b890" size={32} />
+                  <span style={{ fontSize: 11, fontWeight: 600, color: "#17b890", letterSpacing: "0.2em" }}>DHAAR</span>
+                </div>
+                <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", lineHeight: 1.3, letterSpacing: "-0.01em" }}>India's Healthcare<br />Operating System</div>
+                <div style={{ fontSize: 12, color: "#5a6577", marginTop: 10 }}>Pre-Seed Deck • AyuVinc • 2025</div>
+              </div>
+              <DevanagariLogo color="rgba(23,184,144,0.15)" size={80} />
+              <div style={{ position: "absolute", right: 36, bottom: 12, fontSize: 10, color: "#3a4250", letterSpacing: "0.2em", textTransform: "uppercase" }}>Investor Deck Title Slide</div>
+            </div>
+          </div>
+
+          {/* ════════════════════════════════════════════
+              FOOTER
+              ════════════════════════════════════════════ */}
+          <div style={{ marginTop: 64, padding: "24px 0", borderTop: "1px solid #eaeef3", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <IconMark color="#b0b8c8" size={20} />
+              <span style={{ fontSize: 12, color: "#b0b8c8" }}>DHAAR Brand Identity v1.0 — by AyuVinc</span>
+            </div>
+            <span style={{ fontSize: 11, color: "#c0c8d4" }}>For co-founders & team • Confidential</span>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
